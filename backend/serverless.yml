@@ -20,6 +20,7 @@ functions:
       GOOGLE_CLIENT_SECRET: ${env:GOOGLE_CLIENT_SECRET}
       AUTHORIZED_URL: ${env:AUTHORIZED_URL}
       OAUTH_CALLBACK_URL: ${env:OAUTH_CALLBACK_URL}
+      FLASK_SECRET: ${env:FLASK_SECRET}
     image:
       name: appimage
     timeout: 30
