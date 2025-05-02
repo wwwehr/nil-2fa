@@ -1,0 +1,28 @@
+service: nil-2fa-middleware
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  stage: dev
+  region: us-east-1
+  deploymentBucket:
+    name: sls-${self:service}
+  ecr:
+    scanOnPush: true
+    images:
+      appimage:
+        path: ./
+
+functions:
+  app:
+    environment:
+      GOOGLE_CLIENT_ID: ${env:GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${env:GOOGLE_CLIENT_SECRET}
+      AUTHORIZED_URL: ${env:AUTHORIZED_URL}
+      OAUTH_CALLBACK_URL: ${env:OAUTH_CALLBACK_URL}
+    image:
+      name: appimage
+    timeout: 30
+    events:
+      - http: ANY /
+      - http: 'ANY /{proxy+}'

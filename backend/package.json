@@ -1,0 +1,7 @@
+{
+  "name": "nil-2fa-backend",
+  "devDependencies": {
+    "@types/serverless": "^3",
+    "serverless": "^3.38.0"
+  }
+}
