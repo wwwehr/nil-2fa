@@ -6,6 +6,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { FcDataConfiguration, FcInfo, FcGoogle, FcKey } from "react-icons/fc";
 import { FiEye, FiEdit, FiShare2, FiUsers } from "react-icons/fi";
+import {
+  type NucTokenEnvelope,
+} from "@nillion/nuc";
 
 import {
   CloseButton,
@@ -49,7 +52,7 @@ interface PermissionOption {
 }
 
 const PermissionRadioCards = () => {
-  const [value, setValue] = useState("read");
+  const [value, setValue] = useState<string>("read");
 
   const items: PermissionOption[] = [
     {
@@ -84,7 +87,7 @@ const PermissionRadioCards = () => {
     <>
       <RadioCard.Root
         defaultValue="read"
-        onChange={(val) => setValue(val)}
+        onChange={(val: any) => setValue(val.target.value)}
         gap="14"
       >
         <Flex gap="4" direction="column">
@@ -158,7 +161,7 @@ export default function Home() {
     userId,
     basicNuc,
   } = useZkLogin();
-  const [nuc, setNuc] = useState(null);
+  const [nuc, setNuc] = useState<NucTokenEnvelope | null>(null);
   useEffect(() => {
     (async () => {
       const myNuc = await basicNuc(userId as string);

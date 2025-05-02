@@ -23,7 +23,7 @@ import * as secp from "@noble/secp256k1";
 // Define the shape of our context
 interface ZkLoginContextType extends AuthState {
   isLoading: boolean;
-  basicNuc: (data: string) => Promise<>;
+  basicNuc: (data: string) => Promise<NucTokenEnvelope | null>;
   hardwareInit: () => void;
   logout: () => void;
 }

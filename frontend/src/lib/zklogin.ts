@@ -115,15 +115,12 @@ class ZkLoginClient {
     try {
       // Try to get assertion from existing passkey
       const assertion = await this.getPasskeyAssertion(challenge);
-      return assertion.response.signature;
+      return (assertion.response as AuthenticatorAssertionResponse).signature;
     } catch (error) {
       // No existing passkey found, create a new one
       console.log("No existing passkey found, creating new one");
       const credential = await this.createPasskey(jwtPayload, challenge);
-
-      // For new passkeys, we'll use the attestation object as key material
-      const attestationBuffer = credential.response.attestationObject;
-      return attestationBuffer;
+      return (credential.response as AuthenticatorAttestationResponse).attestationObject;
     }
   }
 
@@ -189,7 +186,8 @@ class ZkLoginClient {
         { type: "public-key", alg: -8 }, // Ed25519
       ],
       authenticatorSelection: {
-        requireResidentKey: "required",
+        residentKey: "required",
+        requireResidentKey: true,
         userVerification: "preferred",
       },
       timeout: 60000,
