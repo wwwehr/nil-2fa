@@ -1,3 +1,5 @@
+import serverless_wsgi
+
 from flask import Flask
 from flask import redirect, abort
 from authlib.integrations.flask_client import OAuth
@@ -48,3 +50,6 @@ def auth(name):
         samesite="Lax",
     )
     return response
+
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
